@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My sports page</title>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB6hn8G08xb05gh6tRJMJIyf-jJ4F0r6uI",
+    authDomain: "sportsfete-732bf.firebaseapp.com",
+    databaseURL: "https://sportsfete-732bf.firebaseio.com",
+    projectId: "sportsfete-732bf",
+    storageBucket: "sportsfete-732bf.appspot.com",
+    messagingSenderId: "528030036404"
+  };
+  firebase.initializeApp(config);
+var ref = firebase.database().ref().child('departments');
+var total=0;
+var i=0;
+var obj = [];
+//var trial = new object(); 
+ref.on("value", function(snapshot) {
+   console.log(snapshot.val());
+   ref.once('value', function(snapshot) {
+   snapshot.forEach(function(childSnapshot) {
+  	var childParent = snapshot.key;
+  	console.log(childParent);
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+//total+=childData;
+//item.put(childKey, childData);
+//console.log(item);
+obj[i]={childParent,childKey,childData,total};
+i++;
+  });
+ console.log(i);
+  //console.log(obj);
+  //console.log(obj[1]);
+
+  var myobj = JSON.parse(obj);
+ console.log(myobj[6]);
+});
+
+
+}, function (error) {
+   console.log("Error: WE noticed" + error.code);
+});
+
+
+
+
+
+
+
+/*
+
+
+
+
+var ref = firebase.database().ref().child('departments').child('');
+var total=0;
+var i=0;
+var obj = [];
+//var trial = new object(); 
+ref.on("value", function(snapshot) {
+   console.log(snapshot.val());
+   ref.once('value', function(snapshot) {
+   snapshot.forEach(function(childSnapshot) {
+  	var childParent = snapshot.key;
+  	console.log(childParent);
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+//total+=childData;
+//item.put(childKey, childData);
+//console.log(item);
+obj[i]={childParent,childKey,childData,total};
+i++;
+  });
+ console.log(i);
+
+
+  //console.log(obj);
+  //console.log(obj[1]);
+});
+
+
+}, function (error) {
+   console.log("Error: WE noticed" + error.code);
+});
+*/
+</script>
+</body>
+</html>
