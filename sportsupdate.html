@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My sports page</title>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB6hn8G08xb05gh6tRJMJIyf-jJ4F0r6uI",
+    authDomain: "sportsfete-732bf.firebaseapp.com",
+    databaseURL: "https://sportsfete-732bf.firebaseio.com",
+    projectId: "sportsfete-732bf",
+    storageBucket: "sportsfete-732bf.appspot.com",
+    messagingSenderId: "528030036404"
+  };
+  firebase.initializeApp(config);
+
+  var winner ;
+var ref = firebase.database().ref().child('events');
+ref.on("value", function(snapshot) {
+   
+   ref.once('value', function(snapshot) {
+   snapshot.forEach(function(childSnapshot) {
+    var childData = childSnapshot.val();
+    //console.log(childSnapshot.val());
+    //console.log(childData);
+    //console.log(childData["winner"]);
+    round = childData["round"];
+    winner = childData["winner"];
+    console.log(childData["name"]);
+    if(round=="FINALS")
+    { 
+    console.log("i won");
+    childSnapshot.val()["winner"]="cse won";
+    var ref1 = firebase.database().ref("/departments/"+winner).set({
+      "BADMINTON (MIXED)":8
+    });
+
+    }
+
+   
+});
+}, function (error) {
+   console.log("Error: WE noticed" + error.code);
+});
+ });
+
+//console.log(winner);
+
+</script>
+</body>
+</html>
