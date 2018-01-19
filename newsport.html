@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My sports page</title>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB6hn8G08xb05gh6tRJMJIyf-jJ4F0r6uI",
+    authDomain: "sportsfete-732bf.firebaseapp.com",
+    databaseURL: "https://sportsfete-732bf.firebaseio.com",
+    projectId: "sportsfete-732bf",
+    storageBucket: "sportsfete-732bf.appspot.com",
+    messagingSenderId: "528030036404"
+  };
+  firebase.initializeApp(config);
+var ref = firebase.database().ref().child('departments');
+var total=0;
+var i=0;
+var obj = [];
+var arr = [[],[]];
+var score = [[],[]];
+var total = [];
+var tot;
+//var trial = new object(); 
+ref.on("value", function(snapshot) {
+   //console.log(snapshot.val());
+   ref.once('value', function(snapshot) {
+   snapshot.forEach(function(childSnapshot) {
+    var j=0;
+  	var childParent = snapshot.key;
+  	//console.log(childParent);
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+    //console.log(childData);
+    //console.log(Object.keys(childData)[0]);
+     //console.log(Object.keys(childData)[1]);
+
+     /*Object.keys(childData).forEach(function(element) {
+      //console.log(element);
+      j++;
+
+     }) ;*/
+     console.log(i);
+      console.log(childKey);
+      arr[i][0] = childKey;
+      score[i][0]=childKey; 
+      console.log(arr[i][0]);
+      var k;
+      /*for(k=1;k<j;k++)
+      {
+        arr[i][k]=Object.keys(childData)[k-1];
+        score[i][k]=Object.values(childData)[k-1];
+        //total[i]+=(score[i][k]);
+
+      }*/
+      // console.log(i);
+      //console.log(Object.values(childData)[0]);
+
+//total+=childData;
+//item.put(childKey, childData);
+//console.log(item);
+//obj[i]={childParent,childKey,childData,total};
+++i;
+  });
+ //console.log('arrived');
+   //console.log(arr);
+   //console.log(score);
+   //console.log(total);
+   //console.log(total);
+
+  //console.log(obj);
+  //console.log(obj[1]);
+  //var myobj = JSON.parse(obj);
+ //console.log(myobj[6]);
+});
+}, function (error) {
+   console.log("Error: WE noticed" + error.code);
+});
+/*
+var ref = firebase.database().ref().child('departments').child('');
+var total=0;
+var i=0;
+var obj = [];
+//var trial = new object(); 
+ref.on("value", function(snapshot) {
+   console.log(snapshot.val());
+   ref.once('value', function(snapshot) {
+   snapshot.forEach(function(childSnapshot) {
+  	var childParent = snapshot.key;
+  	console.log(childParent);
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+//total+=childData;
+//item.put(childKey, childData);
+//console.log(item);
+obj[i]={childParent,childKey,childData,total};
+i++;
+  });
+ console.log(i);
+  //console.log(obj);
+  //console.log(obj[1]);
+});
+}, function (error) {
+   console.log("Error: WE noticed" + error.code);
+});
+*/
+</script>
+</body>
+</html>
