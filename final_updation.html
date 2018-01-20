@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My sports page</title>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB6hn8G08xb05gh6tRJMJIyf-jJ4F0r6uI",
+    authDomain: "sportsfete-732bf.firebaseapp.com",
+    databaseURL: "https://sportsfete-732bf.firebaseio.com",
+    projectId: "sportsfete-732bf",
+    storageBucket: "sportsfete-732bf.appspot.com",
+    messagingSenderId: "528030036404"
+  };
+  firebase.initializeApp(config);
+
+  var winner,winner1,parent,childData,sportData,score,ref1,ref2,ref3,sport,runner,runner1,score_runner;
+var ref = firebase.database().ref().child('events');
+ref.on("value", function(snapshot) {
+   ref.once('value', function(snapshot) {
+    parent = snapshot.key;
+    //console.log(parent);
+   snapshot.forEach(function(childSnapshot) {
+    childData = childSnapshot.val();
+    parentKey = childSnapshot.key;
+    sportData;
+    score;
+    //console.log(parentKey);
+    //console.log(childSnapshot.val());
+    //console.log(childData);
+    //console.log(childData["winner"]);
+    round = childData["round"];
+    winner = childData["winner"];
+    //console.log(childData["dept1"]);
+    if(round=="FINALS")
+    { 
+      if(childData["dept1"]==winner)
+        runner = childData["dept2"];
+      else
+        runner = childData["dept1"];
+      console.log(runner);
+        ref1 = firebase.database().ref("/sports/"+parentKey).update({
+      "first_place" : winner,
+      "second_place" : runner
+    });
+        //console.log(winner);
+        ref2 = firebase.database().ref("/sports/"+parentKey);
+          ref2.on('value',function(snapshot){
+          sport = snapshot.key;
+           sportData = snapshot.val();
+          score = sportData["points"][0];
+          score_runner = sportData["points"][1];
+          winner1 = sportData["first_place"];
+          runner1 = sportData["second_place"];
+          //console.log(winner1);
+          //console.log(sport);
+          if(winner1!="NA")
+          ref3 = firebase.database().ref("/departments/"+winner1).update({
+                          [sport] : score
+                                });
+           ref4 = firebase.database().ref("/departments/"+runner1).update({
+                          [sport] : score_runner
+                                });
+        });
+          
+    //childSnapshot.val()["winner"]="cse won";
+    }
+
+   
+});
+}, function (error) {
+   console.log("Error: WE noticed" + error.code);
+});
+ });
+
+
+
+//console.log(winner);
+
+</script>
+</body>
+</html>
