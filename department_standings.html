@@ -20,11 +20,18 @@
 var ref = firebase.database().ref().child('departments');
 var total=0;
 var i=0;
-var obj = [];
-var arr = [[],[]];
-var score = [[],[]];
-var total = [];
+var obj = [] ;
+ var arr = [];
+ var score = [];
+var total;
 var tot;
+var f;
+for(f=0;f<18;f++)
+{
+  arr[f]=[];
+  score[f]=[];
+
+}
 //var trial = new object(); 
 ref.on("value", function(snapshot) {
    //console.log(snapshot.val());
@@ -42,23 +49,31 @@ ref.on("value", function(snapshot) {
      }) 
      //console.log(j);
      //console.log(childKey);
-      //console.log(i);
-     
-      var k;
-      for(k=0;k<j-1;k++)
+     total =0;
+      var k=0;
+      //console.log(childKey);
+      for(k=0;k<j-2;k++)
       { //console.log(Object.keys(childData)[k]);
-        arr[i][k+1]=Object.keys(childData)[k];
-        score[i][k+1]=Object.values(childData)[k];
-         arr[i][0]=childKey;
-         score[i][0]=childKey;
-      }
-     
+      //console.log(i);
 
+        arr[i][0]=childKey;
+        score[i][0]=childKey;
+        arr[i][k+1] = Object.keys(childData)[k];
+
+        score[i][k+1]=Object.values(childData)[k];
+
+        total+=score[i][k+1]; 
+      }
+      //console.log(arr);
      
+       //console.log(total);
+     ref3 = firebase.database().ref("/departments/"+childKey).update({
+               "total" : total
+                     });
 ++i;
   });
 
-   console.log(arr);
+  console.log(arr);
    console.log(score);
  });
 
