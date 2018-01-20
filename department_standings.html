@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My sports page</title>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB6hn8G08xb05gh6tRJMJIyf-jJ4F0r6uI",
+    authDomain: "sportsfete-732bf.firebaseapp.com",
+    databaseURL: "https://sportsfete-732bf.firebaseio.com",
+    projectId: "sportsfete-732bf",
+    storageBucket: "sportsfete-732bf.appspot.com",
+    messagingSenderId: "528030036404"
+  };
+  firebase.initializeApp(config);
+var ref = firebase.database().ref().child('departments');
+var total=0;
+var i=0;
+var obj = [];
+var arr = [[],[]];
+var score = [[],[]];
+var total = [];
+var tot;
+//var trial = new object(); 
+ref.on("value", function(snapshot) {
+   //console.log(snapshot.val());
+   ref.once('value', function(snapshot) {
+   snapshot.forEach(function(childSnapshot) {
+    var j=0;
+  	var childParent = snapshot.key;
+  	//console.log(childParent);
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+     Object.keys(childData).forEach(function(element) {
+      //console.log(element);
+      j++;
+      //console.log(j);
+     }) 
+     //console.log(j);
+     //console.log(childKey);
+      //console.log(i);
+     
+      var k;
+      for(k=0;k<j-1;k++)
+      { //console.log(Object.keys(childData)[k]);
+        arr[i][k+1]=Object.keys(childData)[k];
+        score[i][k+1]=Object.values(childData)[k];
+         arr[i][0]=childKey;
+         score[i][0]=childKey;
+      }
+     
+
+     
+++i;
+  });
+
+   console.log(arr);
+   console.log(score);
+ });
+
+}, function (error) {
+   console.log("Error: WE noticed" + error.code);
+});
+</script>
+</body>
+</html>
